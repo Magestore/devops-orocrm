@@ -2,7 +2,7 @@
 
 BACKUP_DIR=/backup/orocrm
 
-if [ !-d $BACKUP_DIR ]; then
+if [ ! -d $BACKUP_DIR ]; then
   mkdir -p $BACKUP_DIR
 fi
 
