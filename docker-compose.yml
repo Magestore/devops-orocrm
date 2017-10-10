@@ -1,5 +1,5 @@
 data:
-  image: djocker/orodata
+  image: magestore/orocrm_database
   container_name: orodatabase
 db:
   image: mysql:5.5
