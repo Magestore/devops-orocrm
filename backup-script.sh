@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BACKUP_DIR=/backup/orocrm
-MAX_FILES=5
+MAX_FILES=30
 
 if [ ! -d $BACKUP_DIR ]; then
   mkdir -p $BACKUP_DIR
