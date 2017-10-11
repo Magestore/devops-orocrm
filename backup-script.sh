@@ -25,7 +25,7 @@ OVER=$(( NUM_FILES - MAX_FILES ))
 echo $OVER
 if [ $OVER -gt 0 ]; then
   echo 'OK baby'
-  ls | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %s rm $BACKUP_DIR/%s
+  ls | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %%s echo $BACKUP_DIR/%%s
 fi
 
 docker save -o $BACKUP_DIR/"$FILE_PREFIX"_$MONTH"$DATE"_$TIME.tar magestore/orocrm_database
