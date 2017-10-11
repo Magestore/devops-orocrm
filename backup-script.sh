@@ -17,7 +17,7 @@ DATE=$( date +%d )
 MONTH=$( date +%Y%m )
 TIME=$( date +%H%M%S )
 
-docker save -o $BACKUP_DIR/magestore_orocrm_$(echo $MONTH).tar magestore/orocrm
+#docker save -o $BACKUP_DIR/magestore_orocrm_$(echo $MONTH).tar magestore/orocrm
 
 FILE_PREFIX="magestore_orodatabase"
 NUM_FILES=$(ls -l $BACKUP_DIR | grep $FILE_PREFIX | wc -l)
