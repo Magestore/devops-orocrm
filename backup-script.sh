@@ -22,10 +22,8 @@ TIME=$( date +%H%M%S )
 FILE_PREFIX="magestore_orodatabase"
 NUM_FILES=$(ls -l $BACKUP_DIR | grep $FILE_PREFIX | wc -l)
 OVER=$(( NUM_FILES - MAX_FILES ))
-echo $OVER
 if [ $OVER -gt 0 ]; then
-  echo 'OK baby'
-  ls $BACKUP_DIR | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %%s echo $BACKUP_DIR/%%s
+  ls $BACKUP_DIR | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %s echo 'delete '$BACKUP_DIR/%s; rm %s
 fi
 
 docker save -o $BACKUP_DIR/"$FILE_PREFIX"_$MONTH"$DATE"_$TIME.tar magestore/orocrm_database
