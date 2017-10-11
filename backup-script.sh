@@ -22,7 +22,9 @@ TIME=$( date +%H%M%S )
 FILE_PREFIX="magestore_orodatabase"
 NUM_FILES=$(ls -l $BACKUP_DIR | grep $FILE_PREFIX | wc -l)
 OVER=$(( NUM_FILES - MAX_FILES ))
+echo $OVER
 if [ $OVER -gt 0 ]; then
+  echo 'OK baby'
   ls | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %s rm $BACKUP_DIR/%s
 fi
 
