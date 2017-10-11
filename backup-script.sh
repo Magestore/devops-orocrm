@@ -23,7 +23,7 @@ FILE_PREFIX="magestore_orodatabase"
 NUM_FILES=$(ls -l $BACKUP_DIR | grep $FILE_PREFIX | wc -l)
 OVER=$(( NUM_FILES - MAX_FILES ))
 if [ $OVER -gt 0 ]; then
-  ls $BACKUP_DIR | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %s echo 'delete '$BACKUP_DIR/%s; rm %s
+  ls $BACKUP_DIR | grep $FILE_PREFIX | sort | head -n $OVER | xargs -I %s echo 'delete '$BACKUP_DIR/%s; rm $BACKUP_DIR/%s;
 fi
 
 docker save -o $BACKUP_DIR/"$FILE_PREFIX"_$MONTH"$DATE"_$TIME.tar magestore/orocrm_database
