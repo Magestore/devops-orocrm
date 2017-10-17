@@ -1,9 +1,6 @@
-data:
-  image: magestore/orocrm_database
-  container_name: orodatabase
 db:
-  image: mysql:5.5
-  container_name: orocrm_db
+  image: mysql:5.6
+  container_name: orocrm_mysql
   expose:
     - "3306"
   environment:
@@ -11,54 +8,22 @@ db:
     - MYSQL_DATABASE=orocrm
     - MYSQL_USER=orocrm
     - MYSQL_PASSWORD=orocrm
-  volumes_from:
-    - data
-mail:
-  image: catatnight/postfix
-  container_name: orocrm_mail
-  expose:
-    - "25"
-  ports:
-    - "25:25"
-  environment:
-    - maildomain=crm.magestore.com
-    - smtp_user=user@localhost:password,user@crm.magestore.com:password
+  volumes:
+    - orocrm_data:/var/lib/mysql
 orocrm:
-  #image: djocker/oromono
   image: magestore/orocrm
   container_name: orocrm
   links:
     - "db"
-    - "mail"
   expose:
-    - "465"
-    - "587"
+    ["80", "8080", "443", "465", "587", "993", "995"]
   ports:
     - "80:80"
     - "8080:8080"
-    - "8088:8088"
     - "443:443"
     - "465:465"
     - "587:587"
-  environment:
-    - CMD_INIT_BEFORE=
-    - CMD_INIT_CLEAN=runuser -s /bin/sh -c '/usr/bin/php /var/www/app/console oro:install --timeout 3600 --force --drop-database --env=prod --user-name=admin --user-firstname=Robert --user-lastname=Tit --user-password="admin" --user-email="johndoe@example.com" --organization-name="Magestore" --application-url="http://orocrm.magestore.com/"' www-data
-    - CMD_INIT_INSTALLED=
-    - CMD_INIT_AFTER=
-    - APP_DB_DRIVER=pdo_mysql
-    - APP_DB_HOST=db
-    - APP_DB_PORT=3306
-    - APP_DB_USER=orocrm
-    - APP_DB_PASSWORD=orocrm
-    - APP_DB_NAME=orocrm
-    - APP_HOSTNAME=localhost
-    - APP_MAILER_TRANSPORT=smtp
-    - APP_MAILER_HOST=mail
-    - APP_MAILER_PORT=25
-    - APP_MAILER_ENCRYPTION=
-    - APP_MAILER_USER=user
-    - APP_MAILER_PASSWORD=password
-    - APP_WEBSOCKET_BACKEND_PORT=8080
-    - APP_WEBSOCKET_FRONTEND_PORT=8080
-    - APP_SECRET=123456789123456789
-    - APP_IS_INSTALLED=
+    - "993:993"
+    - "995:995"
+  #command: ["bash", "-c", "while true; do sleep 1; done;"]
+  entrypoint: /run.sh
